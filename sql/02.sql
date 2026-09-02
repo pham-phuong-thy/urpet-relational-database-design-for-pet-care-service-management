@@ -2,7 +2,6 @@
 
 ## 1. Total Revenue by Day
 
-```sql
 SELECT
     CAST(InvoiceDate AS DATE) AS RevenueDate,
     COUNT(InvoiceID) AS NumberOfInvoices,
@@ -10,11 +9,9 @@ SELECT
 FROM INVOICE
 GROUP BY CAST(InvoiceDate AS DATE)
 ORDER BY RevenueDate;
-```
 
 ## 2. Revenue by Service Type
 
-```sql
 SELECT
     S.ServiceID,
     S.Category AS ServiceType,
@@ -27,11 +24,9 @@ GROUP BY
     S.ServiceID,
     S.Category
 ORDER BY TotalRevenue DESC;
-```
 
 ## 3. Service Type with the Highest Revenue
 
-```sql
 SELECT TOP 1
     S.ServiceID,
     S.Category AS ServiceType,
@@ -43,11 +38,9 @@ GROUP BY
     S.ServiceID,
     S.Category
 ORDER BY TotalRevenue DESC;
-```
 
 ## 4. Bookings with Payments of at Least 2 Million VND in May 2025
 
-```sql
 SELECT
     PY.PaymentID,
     PY.PaymentDateTime,
@@ -69,11 +62,9 @@ WHERE
     MONTH(PY.PaymentDateTime) = 5
     AND YEAR(PY.PaymentDateTime) = 2025
     AND PY.Amount >= 2000000;
-```
 
 ## 5. Revenue Before and After Discounts
 
-```sql
 SELECT
     BD.ServiceID,
     SUM(BD.ServicePrice * BD.Quantity) AS OriginalRevenue,
@@ -81,11 +72,9 @@ SELECT
     SUM(BD.Total_Amount) AS FinalRevenue
 FROM BOOKING_DETAILS BD
 GROUP BY BD.ServiceID;
-```
 
 ## 6. All Booking Information with Customer Details
 
-```sql
 SELECT
     BF.BookingID,
     C.CustomerName,
@@ -95,11 +84,9 @@ SELECT
 FROM BOOKING_FORM BF
 JOIN CUSTOMERS C
     ON BF.CustomerID = C.CustomerID;
-```
 
 ## 7. Average Service Duration by Service Type
 
-```sql
 SELECT
     S.Category AS ServiceType,
     AVG(DATEDIFF(MINUTE, P.StartTime, P.EndTime)) AS AvgDurationMinutes
@@ -111,11 +98,9 @@ JOIN BOOKING_DETAILS BD
 JOIN SERVICES S
     ON BD.ServiceID = S.ServiceID
 GROUP BY S.Category;
-```
 
 ## 8. Daily Service Completion Rate
 
-```sql
 SELECT
     CAST(BF.AppointmentDateTime AS DATE) AS BookingDate,
     COUNT(BF.BookingID) AS TotalBookings,
@@ -143,11 +128,9 @@ LEFT JOIN PERFORMANCE_DETAIL PD
     ON P.PerformanceID = PD.PerformanceID
 GROUP BY CAST(BF.AppointmentDateTime AS DATE)
 ORDER BY BookingDate;
-```
 
 ## 9. Discounted Bookings with Good Service Performance
 
-```sql
 SELECT
     BF.BookingID,
     C.CustomerName,
@@ -186,11 +169,9 @@ WHERE
     AND BD.Discount > 0
     AND I.Status = N'Đã thanh toán'
 ORDER BY RevenueAfterDiscount DESC;
-```
 
 ## 10. Employee Performance Based on Number of Processed Bookings
 
-```sql
 SELECT
     E.EmployeeID,
     E.EmployeeName,
@@ -208,11 +189,9 @@ GROUP BY
     E.EmployeeID,
     E.EmployeeName
 ORDER BY NumberOfServicesCompleted DESC;
-```
 
 ## 11. Best-Performing Employee in June 2025 Based on Number of Services Performed
 
-```sql
 SELECT
     E.EmployeeID,
     E.EmployeeName,
@@ -242,11 +221,9 @@ GROUP BY
     E.EmployeeID,
     E.EmployeeName
 ORDER BY TotalRevenueGenerated DESC;
-```
 
 ## 12. Service Receiving the Most Negative Feedback
 
-```sql
 SELECT
     S.ServiceID,
     S.Category AS ServiceType,
@@ -273,11 +250,9 @@ GROUP BY
     S.ServiceID,
     S.Category
 ORDER BY NumberOfNegativeFeedback DESC;
-```
 
 ## 13. Unpaid and Cancelled Invoices
 
-```sql
 SELECT
     COUNT(*) AS TotalInvoices,
     SUM(
@@ -311,11 +286,9 @@ SELECT
         2
     ) AS CancellationRate
 FROM INVOICE I;
-```
 
 ## 14. Services and Number of Bookings by Day of the Week
 
-```sql
 SELECT
     DATENAME(WEEKDAY, BF.BookingDate) AS DayOfWeek,
     S.Category AS ServiceType,
@@ -331,11 +304,9 @@ GROUP BY
 ORDER BY
     DayOfWeek,
     NumberOfBookings DESC;
-```
 
 ## 15. Customers with at Least Five Bookings
 
-```sql
 SELECT
     C.CustomerID,
     C.CustomerName,
@@ -348,11 +319,9 @@ GROUP BY
     C.CustomerName
 HAVING COUNT(BF.BookingID) >= 5
 ORDER BY NumberOfBookings DESC;
-```
 
 ## 16. Customers Who Used the Most Different Service Types
 
-```sql
 SELECT
     C.CustomerID,
     C.CustomerName,
@@ -368,5 +337,4 @@ GROUP BY
     C.CustomerID,
     C.CustomerName
 ORDER BY NumberOfServiceTypesUsed DESC;
-```
 
