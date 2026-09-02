@@ -67,7 +67,7 @@ TaxAmount DECIMAL(10,2),
 TotalAmount DECIMAL(10,2) NOT NULL,
 InvoiceNote TEXT,
 Status VARCHAR(255) NOT NULL,
-CreatedAt DATETIME NOT NULL,
+CreatedAt DATETIME NOT NULL
 )
 
 ** 8. PAYMENTS **
